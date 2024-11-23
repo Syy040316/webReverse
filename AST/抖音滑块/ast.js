@@ -9,32 +9,39 @@ const NodePath  = require("@babel/traverse").NodePath; //智能提示所需
 //js混淆代码读取
 const encodeFile = process.argv.length > 2 ? process.argv[2] : "./encode.js";  //默认的js文件
 const decodeFile = process.argv.length > 3 ? process.argv[3] : encodeFile.slice(0, encodeFile.length - 3) + "_ok.js";
-
+const decodeFun = process.argv.length > 3 ? process.argv[3] : "decodeFun.js";
 
 //将源代码解析为AST
 let sourceCode = files.readFileSync(encodeFile, { encoding: "utf-8" });
 let ast = parser.parse(sourceCode);
 console.time("处理完毕，耗时");
+flag = true
 
-syy_count= 0
+BIN_NODE = template(`!A`);
+
 funNameArray = []
 codes = ''
 function savePath(path){
     if (types.isUnaryExpression(path.parentPath )){
-        codes += `${path.parentPath} \r\n`
+        codes += `${generator(path.parentPath.node).code} \r\n`
         path.parentPath.remove()
 
     }
     else{
-        fakeFunName = 'syy' + syy_count
-        syy_count += 1
-        if(path.node.callee.id == undefined){
-            path.node.callee.id = types.identifier(fakeFunName)
+
+        newPath = BIN_NODE({
+            A: path.node
+
+        });
+        newPath = generator(newPath)
+        if (flag){
+            console.log(newPath.code);
+            console.log(generator(path.node).code);
+            flag = false
+
         }
 
-
-
-        codes += `${path} \r\n`
+        codes += `${newPath.code} \r\n`
         path.remove()
     }
 
@@ -63,6 +70,7 @@ function recordCallFunName(path){
     let funName2 = arguments[0].name
     funNameArray.push(funName1)
     funNameArray.push(funName2)
+    console.log(`funName1 -> ${funName1};  funName2 -> ${funName2}`);
     savePath(path)
 }
 
@@ -80,9 +88,10 @@ function recordFunName(path){
     // if(funName == "vb"){
     //     console.log(funName);}
     if (!funNameArray.includes(funName)){return}
-    codes += `${path} \r\n`
+    codes += `${generator(path.node).code} \r\n`
     path.remove()
 }
+
 
 const recordFunName_traverse = {
     FunctionDeclaration : {enter:[recordFunName]}
@@ -90,29 +99,116 @@ const recordFunName_traverse = {
 
 traverse(ast, recordFunName_traverse);
 
-function replaceFunName(path){
-    let node = path.node
+function replaceFunName1(path){
+    let {node, scope} = path
     varName = node.id.name
+    if (node.init == undefined ||
+        node.init.name == undefined
+    ){return }
     funName = node.init.name
-    if (!funName.includes(funName)){return}
+    if (!funNameArray.includes(funName)){return}
+    scope.rename(varName, funName)
+    path.remove()
+
+}
+function replaceFunName2(path){
+    let {node, scope} = path
+    varName = node.left.name
+    funName = node.right.name
+    operator = node.operator
+    if (!operator == "=" || !funNameArray.includes(funName)){return }
+    scope.rename(varName, funName)
+    path.replaceWith(types.identifier(funName))
 
 
 }
 
-
 const replaceFunName_traverse = {
-    VariableDeclarator : {enter:[replaceFunName]}
+    VariableDeclarator : {enter:[replaceFunName1]},
+    AssignmentExpression : {enter:[replaceFunName2]},
 }
 
 traverse(ast, replaceFunName_traverse);
+eval(codes)
+function evalFun(funName,value){
+
+    let code = `${funName}(${value})`
+    evalRet = eval(code)
+    console.log(evalRet);
+    return evalRet
+}
+function calCallExpression(path){
+    node = path.node
+    funName = node.callee.name
+    if (!funNameArray.includes(funName)){return}
+    arg = node.arguments[0].value
+    evalRet = evalFun(funName, arg)
+    path.replaceWith(types.valueToNode(evalRet))
+
+}
+
+const CallExpression_traverse = {
+    CallExpression : {enter:[calCallExpression]},
+
+}
+
+traverse(ast, CallExpression_traverse);
 
 
+function amendLiteral(path){
+    console.log(path.toString())
+    const {confident,value} = path.evaluate();
+    confident && path.replaceWith(types.valueToNode(value));
+}
+
+// const amendLiteral_traverse = {
+//     BinaryExpression : {enter:[amendLiteral]},
+//
+// }
+//
+// traverse(ast, amendLiteral_traverse);
 
 
+function containsSequenceExpression(path) {
+    let containsSequence = false;
+    // 深度优先遍历当前路径及其所有子路径
+    path.traverse({
+        SequenceExpression(_path) {
+            containsSequence = true;
+            _path.stop(); // 找到逗号表达式后立即停止遍历
+        }
+    });
+    return containsSequence;
+}
+
+//请使用学员专版babel库
+const constantFold = {
+    "BinaryExpression|UnaryExpression"(path) {
+        if (containsSequenceExpression(path)) {
+            return;
+        }
+        if (path.isUnaryExpression({ operator: "-" }) ||
+            path.isUnaryExpression({ operator: "void" })) {
+            return;
+        }
+
+        const { confident, value } = path.evaluate();
+
+        if (!confident || typeof value == "function")
+            return;
 
 
+        if (typeof value == 'number' && (!Number.isFinite(value))) {
+            return;
+        }
 
+        console.log(path.toString(), "--->", value);
 
+        path.replaceWith(types.valueToNode(value));
+    },
+}
+
+traverse(ast, constantFold);
 
 const simplifyLiteral = {
     /**  @param  {NodePath} path */  //每个插件前都要加哈。
@@ -143,3 +239,5 @@ let { code } = generator(ast, opts = {
 });
 
 files.writeFile(decodeFile, code, (err) => { });
+files.writeFile(decodeFun, codes, (err) => { });
+console.log(eval('US(458)'));
