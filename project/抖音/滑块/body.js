@@ -11,7 +11,13 @@ syy_count1 = true
 
 // AES-GCM 加密函数
 
-
+function g(t) {
+    return g = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (t) {
+        return typeof t;
+    } : function (t) {
+        return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
+    }, g(t);
+}
 
 // AES GCM 加密函数
 // function aesGcmEncrypt(text, key, iv) {
@@ -62,15 +68,6 @@ function appendToUint8Array(original, dataToAdd) {
 
     return result;
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1370,7 +1367,219 @@ var iA = null,
     aA = false,
     oA = null,
     cA = null;
-
+function uA(t, e, n) {
+    for (var r, i, a, o, c, u, s, f, l, d, h, p, v, x, g, b, m, y, w, _, k, I, S, A, C, E, M, T, $, j, O, D, P, L, B, R = {
+        LDyQX: function (t, e, n, r) {
+            return t(e, n, r);
+        },
+        irkbE: function (t, e) {
+            return t >>> e;
+        },
+        wCPiM: function (t, e) {
+            return t !== e;
+        },
+        nEjUa: "QMmJq",
+        ymZzW: function (t, e) {
+            return t ^ e;
+        },
+        VyFKB: function (t, e) {
+            return t | e;
+        },
+        JbXlK: function (t, e) {
+            return t >>> e;
+        },
+        Bcxeg: function (t, e) {
+            return t << e;
+        },
+        hryrw: function (t, e) {
+            return t | e;
+        },
+        SbKPd: function (t, e) {
+            return t + e;
+        },
+        dvTwu: function (t, e) {
+            return t + e;
+        },
+        lKYAi: "24|3|20|22|28|31|27|2|17|1|10|18|9|4|11|26|15|25|16|6|7|21|5|14|19|0|13|8|29|23|12|30",
+        BTXIo: function (t, e) {
+            return t >>> e;
+        },
+        TvlaU: function (t, e) {
+            return t >>> e;
+        },
+        diPqh: function (t, e) {
+            return t << e;
+        },
+        UqcpC: function (t, e) {
+            return t << e;
+        },
+        qwwJX: function (t, e) {
+            return t | e;
+        },
+        CJKwP: function (t, e) {
+            return t >>> e;
+        },
+        lLKEk: function (t, e) {
+            return t >>> e;
+        },
+        DMYju: function (t, e) {
+            return t + e;
+        },
+        VqpqG: function (t, e) {
+            return t / e;
+        },
+        PeExi: function (t, e) {
+            return t + e;
+        },
+        LSgId: function (t, e) {
+            return t >>> e;
+        }
+    }, V = n.length(); V >= 128;) {
+        for ($ = 0; $ < 16; ++$) {
+            if (R.wCPiM(R.nEjUa, "QMmJq")) {
+                for (var N = "1|2|4|6|7|3|0|5".split("|"), F = 0;;) {
+                    switch (N[F++]) {
+                        case "0":
+                            (_0x32a027.read > 2048 || 0 === _0x50e971.length()) && _0x54095a.compact();
+                            continue;
+                        case "1":
+                            var q = _0xb4ba0f.length;
+                            continue;
+                        case "2":
+                            _0x4b7a00["messageLength"] += q;
+                            continue;
+                        case "3":
+                            R.LDyQX(_0x19b1a5, _0x4ed90a, _0x596ec6, _0xde3788);
+                            continue;
+                        case "4":
+                            q = [q / 4294967296 >>> 0, q >>> 0];
+                            continue;
+                        case "5":
+                            return _0x372eae;
+                        case "6":
+                            for (var U = _0x56fd22.fullMessageLength.length - 1; U >= 0; --U) {
+                                _0x1e4de9["fullMessageLength"][U] += q[1], q[1] = q[0] + (_0x20e909.fullMessageLength[U] / 4294967296 >>> 0), _0x10b52f["fullMessageLength"][U] = R["irkbE"](_0x4ccb7b.fullMessageLength[U], 0), q[0] = q[1] / 4294967296 >>> 0;
+                            }
+                            continue;
+                        case "7":
+                            _0x4d556d.putBytes(_0x57c6ae);
+                            continue;
+                    }
+                    break;
+                }
+            } else {
+                e[$][0] = n.getInt32() >>> 0, e[$][1] = n.getInt32() >>> 0;
+            }
+        }
+        for (; $ < 80; ++$) {
+            r = (((j = (D = e[$ - 2])[0]) >>> 19 | (O = D[1]) << 13) ^ (O >>> 29 | j << 3) ^ j >>> 6) >>> 0, i = (R.ymZzW(j << 13 | O >>> 19, O << 3 | j >>> 29) ^ (j << 26 | O >>> 6)) >>> 0, j = (L = e[$ - 15])[0], O = L[1], a = R["ymZzW"](R.VyFKB(j >>> 1, O << 31) ^ (j >>> 8 | O << 24), R.JbXlK(j, 7)) >>> 0, o = ((R["Bcxeg"](j, 31) | O >>> 1) ^ (R["Bcxeg"](j, 24) | O >>> 8) ^ R["hryrw"](j << 25, O >>> 7)) >>> 0, P = e[$ - 7], B = e[$ - 16], O = i + P[1] + o + B[1], e[$][0] = R.SbKPd(R["dvTwu"](r, P[0]) + a, B[0]) + (O / 4294967296 >>> 0) >>> 0, e[$][1] = O >>> 0;
+        }
+        for (v = t[0][0], x = t[0][1], g = t[1][0], b = t[1][1], m = t[2][0], y = t[2][1], w = t[3][0], _ = t[3][1], k = t[4][0], I = t[4][1], S = t[5][0], A = t[5][1], C = t[6][0], E = t[6][1], M = t[7][0], T = t[7][1], $ = 0; $ < 80; ++$) {
+            for (var W = R.lKYAi.split("|"), H = 0;;) {
+                switch (W[H++]) {
+                    case "0":
+                        m = g;
+                        continue;
+                    case "1":
+                        r = M + s + l + oA[$][0] + e[$][0] + (O / 4294967296 >>> 0) >>> 0;
+                        continue;
+                    case "2":
+                        p = (x & b | y & (x ^ b)) >>> 0;
+                        continue;
+                    case "3":
+                        f = ((k << 18 | I >>> 14) ^ (k << 14 | I >>> 18) ^ (I << 23 | k >>> 9)) >>> 0;
+                        continue;
+                    case "4":
+                        o = R.BTXIo(O, 0);
+                        continue;
+                    case "5":
+                        I = O >>> 0;
+                        continue;
+                    case "6":
+                        A = I;
+                        continue;
+                    case "7":
+                        O = _ + i;
+                        continue;
+                    case "8":
+                        g = v;
+                        continue;
+                    case "9":
+                        a = R["dvTwu"](R.SbKPd(c, h), O / 4294967296 >>> 0) >>> 0;
+                        continue;
+                    case "10":
+                        i = O >>> 0;
+                        continue;
+                    case "11":
+                        M = C;
+                        continue;
+                    case "12":
+                        v = r + a + (O / 4294967296 >>> 0) >>> 0;
+                        continue;
+                    case "13":
+                        y = b;
+                        continue;
+                    case "14":
+                        w = m;
+                        continue;
+                    case "15":
+                        C = S;
+                        continue;
+                    case "16":
+                        S = k;
+                        continue;
+                    case "17":
+                        O = T + f + d + oA[$][1] + e[$][1];
+                        continue;
+                    case "18":
+                        O = u + p;
+                        continue;
+                    case "19":
+                        _ = y;
+                        continue;
+                    case "20":
+                        l = R.ymZzW(C, k & R.ymZzW(S, C)) >>> 0;
+                        continue;
+                    case "21":
+                        k = w + r + (O / 4294967296 >>> 0) >>> 0;
+                        continue;
+                    case "22":
+                        d = (E ^ I & R.ymZzW(A, E)) >>> 0;
+                        continue;
+                    case "23":
+                        O = R["SbKPd"](i, o);
+                        continue;
+                    case "24":
+                        s = ((R.TvlaU(k, 14) | I << 18) ^ (k >>> 18 | I << 14) ^ (I >>> 9 | R.diPqh(k, 23))) >>> 0;
+                        continue;
+                    case "25":
+                        E = A;
+                        continue;
+                    case "26":
+                        T = E;
+                        continue;
+                    case "27":
+                        h = R["BTXIo"](v & g | m & (v ^ g), 0);
+                        continue;
+                    case "28":
+                        c = (R.ymZzW(v >>> 28 | R.Bcxeg(x, 4), x >>> 2 | v << 30) ^ R["hryrw"](x >>> 7, R["UqcpC"](v, 25))) >>> 0;
+                        continue;
+                    case "29":
+                        b = x;
+                        continue;
+                    case "30":
+                        x = O >>> 0;
+                        continue;
+                    case "31":
+                        u = ((v << 4 | x >>> 28) ^ R.qwwJX(R.diPqh(x, 30), R.JbXlK(v, 2)) ^ (x << 25 | v >>> 7)) >>> 0;
+                        continue;
+                }
+                break;
+            }
+        }
+        O = t[0][1] + x, t[0][0] = t[0][0] + v + (O / 4294967296 >>> 0) >>> 0, t[0][1] = O >>> 0, O = t[1][1] + b, t[1][0] = R.BTXIo(t[1][0] + g + (O / 4294967296 >>> 0), 0), t[1][1] = R.BTXIo(O, 0), O = t[2][1] + y, t[2][0] = R.CJKwP(t[2][0] + m + R["lLKEk"](O / 4294967296, 0), 0), t[2][1] = O >>> 0, O = R["dvTwu"](t[3][1], _), t[3][0] = R.irkbE(R.DMYju(t[3][0], w) + (O / 4294967296 >>> 0), 0), t[3][1] = O >>> 0, O = t[4][1] + I, t[4][0] = t[4][0] + k + (O / 4294967296 >>> 0) >>> 0, t[4][1] = O >>> 0, O = t[5][1] + A, t[5][0] = t[5][0] + S + (R.VqpqG(O, 4294967296) >>> 0) >>> 0, t[5][1] = R.TvlaU(O, 0), O = R.PeExi(t[6][1], E), t[6][0] = t[6][0] + C + (O / 4294967296 >>> 0) >>> 0, t[6][1] = O >>> 0, O = t[7][1] + T, t[7][0] = R.LSgId(R.PeExi(t[7][0] + M, O / 4294967296 >>> 0), 0), t[7][1] = O >>> 0, V -= 128;
+    }
+}
 nA["create"] = function (t) {
     var rA,
         r = {
